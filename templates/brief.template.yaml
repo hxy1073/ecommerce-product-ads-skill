@@ -1,0 +1,45 @@
+schema_version: 1
+source:
+  task_pdf: input/text.pdf
+  product_image: input/product.png
+  logo_file: input/logo.svg
+  parsed_at: null
+project:
+  product_category: null
+  marketing_goal: null
+  target_audience: null
+product:
+  brand: null
+  name:
+    zh: null
+    en: null
+  facts: []
+brand:
+  name: null
+  tone: []
+copy:
+  zh:
+    title: null
+    selling_points: []
+    price: null
+    campaign_period: null
+    cta: null
+  en:
+    title: null
+    selling_points: []
+    price: null
+    campaign_period: null
+    cta: null
+deliverables:
+  languages: []
+  canvas:
+    width: null
+    height: null
+    ratio: null
+    orientation: null
+    format: null
+asset_constraints:
+  product: []
+  logo: []
+missing_fields: []
+

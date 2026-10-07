@@ -1,0 +1,69 @@
+schema_version: 1
+source:
+  task_pdf: input/text.pdf
+  product_image: input/product.png
+  logo_file: input/logo.svg
+  parsed_at: "2026-09-30"
+project:
+  product_category: 保温杯/饮具
+  marketing_goal: 在秋季促销中，使消费者快速理解商品核心价值并形成点击或购买意愿。
+  target_audience: 18 至 35 岁的通勤与轻户外出行消费者。
+product:
+  brand: NORI
+  name:
+    zh: NORI 600 mL 不锈钢保温杯
+    en: NORI 600 mL Stainless Steel Travel Tumbler
+  facts:
+    - 600 mL
+    - 316 不锈钢内胆
+    - 12 小时保温保冷
+    - 一键锁扣，防漏随行
+brand:
+  name: NORI
+  tone:
+    - 简洁
+    - 自然
+    - 可靠
+copy:
+  zh:
+    title: 轻装出行 温度随行
+    selling_points:
+      - 316 不锈钢内胆
+      - 12 小时保温保冷
+      - 一键锁扣 防漏随行
+    price: 秋日出行价 129 元
+    campaign_period: 2026 年 10 月 1 日至 10 月 15 日
+    cta: 立即选购
+  en:
+    title: Travel Light. Keep It Warm.
+    selling_points:
+      - 316 stainless steel interior
+      - Keeps drinks hot or cold for up to 12 hours
+      - One-click lock. Leak-resistant on the go.
+    price: Autumn Travel Price CNY 129
+    campaign_period: 1-15 October 2026
+    cta: Shop now
+deliverables:
+  languages:
+    - zh
+    - en
+  canvas:
+    width: null
+    height: null
+    ratio: "4:5"
+    orientation: 竖版
+    format: PNG
+asset_constraints:
+  product:
+    - 商品外形不得改造或变形
+    - 商品颜色不得改变
+    - 商品自带 Logo 的位置不得移动
+  logo:
+    - 不得重绘
+    - 不得拉伸
+    - 不得旋转
+    - 不得替换
+missing_fields:
+  - deliverables.canvas.width
+  - deliverables.canvas.height
+

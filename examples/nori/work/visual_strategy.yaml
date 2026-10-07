@@ -1,0 +1,55 @@
+schema_version: 1
+strategy:
+  name: 秋日通勤温度轨迹
+  rationale: 以自然、克制的秋季通勤场景承接 NORI 的简洁可靠气质，用大比例商品与三种不同形态的功能标注快速建立价值感。
+  key_visual_concept: 保温杯像随身装备一样立于柔和的通勤路径与秋叶光影之间，视觉动线从标题进入商品，再落到价格与 CTA。
+  desired_audience_response: 一眼看懂 12 小时保温保冷与防漏价值，并感到它适合日常通勤和短途出行。
+  mood:
+    - 简洁
+    - 自然
+    - 可靠
+    - 温暖但不过度复古
+  palette:
+    - 深森林绿
+    - 暖米白
+    - 低饱和秋橙
+    - 炭灰
+  scene: 极简秋日通勤场景，具有柔和台面、抽象路径和少量叶影，不添加会抢夺商品主体的复杂道具。
+  lighting: 左上方柔和暖光配合商品右侧克制轮廓光，底部有可信接触阴影。
+  product_treatment: 保温杯占画面约一半高度以上，保持正面轮廓、奶油白杯身、深绿色杯盖与杯身双叶标识准确。
+  information_hierarchy:
+    - 商品主体
+    - 主标题
+    - 活动价
+    - 三项卖点 callout
+    - CTA 与活动时间
+    - 品牌 Logo
+  selling_point_system:
+    format: 三种互有联系但不重复的 feature callout
+    rationale: 材质用徽章、12 小时用数字仪表、防漏锁扣用引线细节标注，比三行普通文字更具营销感。
+    items:
+      - 316 不锈钢内胆 / 316 stainless steel interior
+      - 12 小时保温保冷 / Keeps drinks hot or cold for up to 12 hours
+      - 一键锁扣 防漏随行 / One-click lock. Leak-resistant on the go.
+  price_treatment: 129 作为最大数字信息置于暖橙色价格模块中，其余价格前缀保持清晰但次级。
+  cta_treatment: 深绿色圆角按钮，与 Logo 和杯盖颜色呼应。
+  typography_direction: 中文使用现代无衬线粗体，英文使用清晰的几何无衬线；避免装饰性脚本体。
+  reference_usage: []
+imagegen_guidance:
+  preserve:
+    - 保温杯形状、奶油白杯身、深绿色杯盖和环形把手
+    - 杯身双叶标识的位置与方向
+    - NORI Logo 的双叶几何、深绿色、比例和方向
+    - brief 中的中英文文案原文
+  emphasize:
+    - 大比例商品英雄感
+    - 价格层级
+    - 具有营销感的 feature callout
+    - 秋日通勤与轻户外氛围
+  avoid:
+    - 重绘或拉伸商品与 Logo
+    - 虚构内部结构的爆炸图
+    - 三行普通正文式卖点
+    - 过度拥挤、强烈霓虹、廉价贴纸堆叠
+    - 水印、乱码或中英文混用
+

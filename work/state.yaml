@@ -1,0 +1,52 @@
+schema_version: 1
+current_stage: completed
+stages:
+  stage_0: {status: completed, completed_at: "2026-09-30"}
+  stage_1: {status: completed, completed_at: "2026-09-30"}
+  stage_2: {status: completed, completed_at: "2026-09-30"}
+  stage_3: {status: completed, completed_at: "2026-09-30"}
+  stage_4: {status: completed, completed_at: "2026-10-07"}
+  stage_5: {status: completed, completed_at: "2026-10-07"}
+generation:
+  versions:
+    - id: hero_zh_v01
+      language: zh
+      path: work/generation/hero_zh_v01.png
+      tool: codex_builtin_imagegen
+      source_dimensions: "1122x1402"
+      normalized_dimensions: "1200x1500"
+    - id: hero_en_v01
+      language: en
+      path: work/generation/hero_en_v01.png
+      tool: codex_builtin_imagegen
+      source_dimensions: "1122x1402"
+      normalized_dimensions: "1200x1500"
+  current_by_language:
+    zh: hero_zh_v01
+    en: hero_en_v01
+qa:
+  latest_report: output/qa_report.md
+  automatic_pass: true
+  overall_status: accepted
+human_confirmation:
+  status: accepted
+  choices:
+    A: 接受并导出
+    B: 重新生成
+    C: 商品或 Logo 失真，使用原始 product.png / logo.svg 修复
+  last_choice: A
+  confirmed_at: "2026-10-07"
+repair:
+  used_original_product: false
+  used_original_logo: false
+exports:
+  - path: output/hero_zh.png
+    language: zh
+    exported_at: "2026-10-07"
+  - path: output/hero_en.png
+    language: en
+    exported_at: "2026-10-07"
+  - path: output/qa_report.md
+    type: qa_report
+    exported_at: "2026-10-07"
+

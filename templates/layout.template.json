@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "canvas": {
+    "width": null,
+    "height": null,
+    "ratio": null,
+    "size_source": null,
+    "safe_margin": null
+  },
+  "visual_flow": [],
+  "regions": {
+    "logo": {"x": null, "y": null, "width": null, "anchor": null},
+    "headline": {"x": null, "y": null, "max_width": null, "anchor": null},
+    "product": {"x": null, "y": null, "max_width": null, "max_height": null, "anchor": null},
+    "selling_points": {"x": null, "y": null, "max_width": null, "anchor": null},
+    "price": {"x": null, "y": null, "max_width": null, "anchor": null},
+    "campaign_period": {"x": null, "y": null, "max_width": null, "anchor": null},
+    "cta": {"x": null, "y": null, "width": null, "height": null, "anchor": null}
+  },
+  "feature_callouts": [],
+  "overlap_rules": [],
+  "notes": []
+}
+

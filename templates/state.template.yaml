@@ -1,0 +1,27 @@
+schema_version: 1
+current_stage: stage_0
+stages:
+  stage_0: {status: not_started, completed_at: null}
+  stage_1: {status: not_started, completed_at: null}
+  stage_2: {status: not_started, completed_at: null}
+  stage_3: {status: not_started, completed_at: null}
+  stage_4: {status: pending, completed_at: null}
+  stage_5: {status: not_started, completed_at: null}
+generation:
+  versions: []
+  current_by_language: {}
+qa:
+  latest_report: null
+  automatic_pass: null
+human_confirmation:
+  status: pending
+  choices:
+    A: 接受并导出
+    B: 重新生成
+    C: 商品或 Logo 失真，使用原始 product.png / logo.svg 修复
+  last_choice: null
+repair:
+  used_original_product: false
+  used_original_logo: false
+exports: []
+

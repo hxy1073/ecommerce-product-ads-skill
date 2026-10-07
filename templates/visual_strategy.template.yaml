@@ -1,0 +1,25 @@
+schema_version: 1
+strategy:
+  name: null
+  rationale: null
+  key_visual_concept: null
+  desired_audience_response: null
+  mood: []
+  palette: []
+  scene: null
+  lighting: null
+  product_treatment: null
+  information_hierarchy: []
+  selling_point_system:
+    format: null
+    rationale: null
+    items: []
+  price_treatment: null
+  cta_treatment: null
+  typography_direction: null
+  reference_usage: []
+imagegen_guidance:
+  preserve: []
+  emphasize: []
+  avoid: []
+
