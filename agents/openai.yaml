@@ -2,7 +2,6 @@ interface:
   display_name: "电商商品营销主视觉"
   short_description: "从 PDF、商品图和品牌 Logo 自动生成并质检电商营销主视觉"
   brand_color: "#294226"
-  default_prompt: "Use $ecommerce-product-ads-skill to create an ecommerce product hero visual from input/text.pdf, input/product.png, and input/logo.svg."
+  default_prompt: "Use $ecommerce-product-ads-skill to initialize the current task from text.pdf, product.png, and logo.svg, then start at Stage 0."
 policy:
   allow_implicit_invocation: true
-

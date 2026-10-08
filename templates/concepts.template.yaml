@@ -1,0 +1,30 @@
+schema_version: 2
+concepts:
+  A:
+    name: null
+    concept: null
+    marketing_focus: null
+    scene_direction: null
+    selling_point_approach: null
+    patterns: []
+  B:
+    name: null
+    concept: null
+    marketing_focus: null
+    scene_direction: null
+    selling_point_approach: null
+    patterns: []
+  C:
+    name: null
+    concept: null
+    marketing_focus: null
+    scene_direction: null
+    selling_point_approach: null
+    patterns: []
+recommendation:
+  concept: null
+  reason: null
+selection:
+  selected: null
+  method: null
+

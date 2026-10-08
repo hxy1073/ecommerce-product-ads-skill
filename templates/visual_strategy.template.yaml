@@ -1,25 +1,16 @@
-schema_version: 1
-strategy:
+schema_version: 2
+selected_concept:
+  id: null
   name: null
-  rationale: null
-  key_visual_concept: null
-  desired_audience_response: null
-  mood: []
-  palette: []
-  scene: null
-  lighting: null
-  product_treatment: null
-  information_hierarchy: []
-  selling_point_system:
-    format: null
-    rationale: null
-    items: []
-  price_treatment: null
-  cta_treatment: null
-  typography_direction: null
-  reference_usage: []
-imagegen_guidance:
-  preserve: []
-  emphasize: []
-  avoid: []
+design_intent: null
+visual_priority: []
+scene_direction: null
+product_treatment: null
+selling_point_expression: null
+mood_and_light: null
+composition_direction: null
+brand_expression: null
+cta_direction: null
+avoid: []
+composition_freedom: high
 

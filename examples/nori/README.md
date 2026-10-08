@@ -1,15 +1,13 @@
-# NORI 示例
+# NORI V2 示例
 
-本示例包含固定的三项输入，以及由 `text.pdf` 事实生成的 Stage 0 文件和 Stage 1 策略/布局。
+该示例真实展示：
 
-示例停在 ImageGen 前，便于测试者观察 Codex 是否会：
+1. Stage 0：从 PDF 提取任务事实，并从商品图记录可见的 `product_visual`；
+2. Stage 1：生成三个在营销叙事与场景上明显不同的 Concept；
+3. Checkpoint A：依据 brief 使用 AUTO 选择 Concept A；
+4. Stage 2：只深化已选择的 Concept，形成高自由度 Art Direction 与非坐标式 layout。
 
-1. 保持 PDF 中未给出的像素宽高为 `null`；
-2. 正确区分中英文文案；
-3. 保护保温杯外形、颜色、杯身标志与品牌 Logo；
-4. 采用 ImageGen-first，而不是默认拼 SVG 海报。
-
-测试时可在本目录执行：
+示例停在 Stage 3 ImageGen 前。秋季、通勤、绿色和保温杯只属于 NORI，不是 Skill 的硬编码规则。
 
 ```powershell
 python ../../scripts/validate.py --project . --stage input

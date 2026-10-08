@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 source:
   task_pdf: input/text.pdf
   product_image: input/product.png
@@ -18,6 +18,28 @@ product:
     - 316 不锈钢内胆
     - 12 小时保温保冷
     - 一键锁扣，防漏随行
+product_visual:
+  category: 带杯盖与侧向环形手柄的直筒饮具
+  dominant_colors:
+    - 暖白或奶油白杯身
+    - 深绿色杯盖、手柄与杯身双叶标识
+  silhouette:
+    - 高直筒圆柱形杯身
+    - 肩部圆润收窄并连接宽厚杯盖
+    - 杯盖右侧延伸出圆角环形手柄
+  visual_features:
+    - 深绿色两段式杯盖
+    - 与杯盖连成一体的右侧环形手柄
+    - 杯身下部居中的深绿色双叶标识
+    - 杯身底部可见一圈结构线
+  material_impression:
+    - 杯身呈细腻哑光或微纹理视觉质感
+    - 杯盖与手柄呈深绿色细颗粒哑光质感
+  protected_features:
+    - 直筒杯身与圆润肩部的整体比例
+    - 两段式杯盖和右侧环形手柄的形状及相对位置
+    - 暖白杯身与深绿色顶部的主要配色关系
+    - 杯身双叶标识的形状、方向与位置
 brand:
   name: NORI
   tone:

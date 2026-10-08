@@ -1,24 +1,28 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "canvas": {
-    "width": null,
-    "height": null,
     "ratio": null,
-    "size_source": null,
-    "safe_margin": null
+    "width": null,
+    "height": null
   },
-  "visual_flow": [],
-  "regions": {
-    "logo": {"x": null, "y": null, "width": null, "anchor": null},
-    "headline": {"x": null, "y": null, "max_width": null, "anchor": null},
-    "product": {"x": null, "y": null, "max_width": null, "max_height": null, "anchor": null},
-    "selling_points": {"x": null, "y": null, "max_width": null, "anchor": null},
-    "price": {"x": null, "y": null, "max_width": null, "anchor": null},
-    "campaign_period": {"x": null, "y": null, "max_width": null, "anchor": null},
-    "cta": {"x": null, "y": null, "width": null, "height": null, "anchor": null}
+  "hierarchy": [],
+  "major_visual_regions": {
+    "product": null,
+    "headline": null,
+    "features": null,
+    "promotion": null,
+    "brand": null,
+    "cta": null
   },
-  "feature_callouts": [],
-  "overlap_rules": [],
-  "notes": []
+  "preferred_relationships": {
+    "product": null,
+    "headline": null,
+    "features": null,
+    "price": null,
+    "cta": null
+  },
+  "safe_areas": [],
+  "asset_protection": [],
+  "composition_freedom": "high"
 }
 

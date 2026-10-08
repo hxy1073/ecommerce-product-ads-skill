@@ -1,0 +1,36 @@
+schema_version: 2
+concepts:
+  A:
+    name: 秋日城市温度同行
+    concept: 把保温杯塑造成可靠的日常通勤装备，让秋季城市节奏与“温度随行”的品牌承诺自然结合。
+    marketing_focus: 以高频通勤场景连接三项核心卖点和限时价格，推动快速理解与购买。
+    scene_direction: 具有秋季线索的现代城市通勤情境，保持简洁、自然、可靠。
+    selling_point_approach: 卖点作为与通勤使用相关的轻量视觉提示，围绕商品形成清晰阅读节奏。
+    patterns:
+      - seasonal_campaign
+      - lifestyle_scene
+  B:
+    name: 12 小时功能证据
+    concept: 把商品作为功能价值主角，以“12 小时保温保冷”为首要证据，快速证明 129 元促销价值。
+    marketing_focus: 强化功能可信度与价格理由，适合需要快速比较和决策的消费者。
+    scene_direction: 克制的产品主视觉环境，以商品细节和功能信息为主要内容。
+    selling_point_approach: 用层级分明的功能标注突出 12 小时、316 内胆和防漏锁扣。
+    patterns:
+      - feature_callout
+      - hero_product
+      - promotional_poster
+  C:
+    name: 轻户外随行片刻
+    concept: 把保温杯呈现为短途出行与轻户外休息时的随行伙伴，强调轻装、可靠和防漏安心。
+    marketing_focus: 通过周末短途与轻户外代入感，建立生活方式吸引力和出行购买动机。
+    scene_direction: 自然但克制的秋日轻户外情境，商品始终是可识别的核心角色。
+    selling_point_approach: 将防漏、保温保冷与材质信息连接到出行使用情境中。
+    patterns:
+      - lifestyle_scene
+      - seasonal_campaign
+recommendation:
+  concept: A
+  reason: 营销目标要求在秋季促销中快速形成点击或购买意愿，目标用户以通勤和轻户外为主。商品高直筒轮廓与环形手柄具有清晰的随行装备特征；A 以更高频的城市通勤承接秋季主题，并能自然容纳三项事实卖点，最符合 NORI 简洁、自然、可靠的品牌调性。
+selection:
+  selected: A
+  method: auto
