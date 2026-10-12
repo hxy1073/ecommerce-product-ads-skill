@@ -29,6 +29,15 @@
     "price": "clear promotional emphasis after product and headline",
     "cta": "visible but secondary"
   },
+  "composition": {
+    "primary_archetype": "Asymmetric Editorial",
+    "secondary_device": "Diagonal Dynamic",
+    "visual_flow": "diagonal environmental movement gathers around a stable product anchor, then resolves into the promotion group",
+    "product_placement_logic": "off-center hero anchoring the calmer side of the moving city environment",
+    "text_product_relationship": "headline occupies counterbalancing negative space while the environmental motion connects text and product",
+    "distinctive_device": "city movement sweeps around the stable tumbler so the product and key visual idea lead before secondary facts",
+    "avoid_default_stack": true
+  },
   "safe_areas": [
     "Keep locked copy and the brand logo comfortably inside the canvas.",
     "Keep the product silhouette and the leaf mark on the product body unobscured.",
@@ -40,4 +49,3 @@
   ],
   "composition_freedom": "high"
 }
-

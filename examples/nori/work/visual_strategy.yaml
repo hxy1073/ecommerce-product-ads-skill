@@ -2,25 +2,63 @@ schema_version: 2
 selected_concept:
   id: A
   name: 秋日城市温度同行
+key_visual_idea: 快速流动的秋季城市环境围绕清晰、稳定、温暖的保温杯展开，以“环境运动 / 商品稳定”形成一眼可识别的视觉反差。
+style_direction:
+  primary_style: Organic Lifestyle
+  product_brand_alignment:
+    - clean
+    - natural
+    - reliable
+    - everyday premium
+  secondary_mood:
+    - restrained autumn warmth
+    - urban movement
+  rationale: 商品的暖白、深绿和简洁结构首先要求自然、可靠且当代的生活方式表达；秋季只作为克制的环境温度，不用橙色落叶覆盖 NORI 本身的清爽品牌气质。
+  avoid:
+    - generic orange autumn decoration
+    - low-end promotional styling
+    - fantasy material effects
 design_intent: 把 NORI 保温杯表现为秋季城市通勤中的可靠随行装备，让用户先感知商品与“温度随行”的关系，再快速理解功能、价格和活动时间。
 visual_priority:
-  - 商品身份与完整轮廓
-  - 主标题与秋季通勤叙事
-  - 活动价格
-  - 三项核心卖点
-  - 品牌、活动时间与 CTA
+  - 商品与“环境运动 / 商品稳定”的 Key Visual Idea
+  - 主标题
+  - 活动价格或最重要核心卖点
+  - 其他卖点、品牌、活动时间与 CTA
 scene_direction: 使用现代城市通勤语境与克制秋季线索建立代入感；环境只负责解释使用情境，不与商品竞争。
 product_treatment: 商品必须成为绝对视觉主角，并保持原始轮廓、主要配色、两段式杯盖、环形手柄和杯身双叶标识准确；它承担“可靠随行装备”的叙事角色。
-selling_point_expression: 将 316 内胆、12 小时保温保冷和防漏锁扣转化为易扫描、与商品或使用情境相关的视觉说明；形式可变化，但不得退化为三行普通正文或虚构内部结构。
+selling_point_expression: 优先把 12 小时保温保冷融入主视觉叙事；316 内胆与防漏锁扣采用克制、整合的次级表达，不默认制作三个同权卡片、徽章或巨大 callout，也不得虚构内部结构。
 mood_and_light: 温暖、清爽、自然且可信；光线应强化商品轮廓和表面质感，并保留真实主要颜色。
 composition_direction: 建立从商品与主标题进入价格和卖点、再到活动时间与 CTA 的清晰阅读路径；允许 ImageGen 根据画面平衡自由组织精确位置与尺度。
 brand_expression: 以克制、有呼吸感和可靠的视觉关系表达 NORI；Logo 保持原几何、比例、方向与颜色。
 cta_direction: CTA 应清楚可见并延续品牌气质，但保持低于商品、标题与价格的层级。
+information_strategy:
+  density: low_or_moderate
+  secondary_information_treatment: subordinate
+reference_guidance:
+  mode: none
+  selected: []
+  learn_from: []
+  do_not_copy:
+    - exact composition
+    - original brand identity
+    - original text
+    - original product form
+typography:
+  headline_direction: clean_humanist_display_sans
+  selected_source: null
+  characteristics:
+    - clear
+    - warm
+    - contemporary
+    - reliable
+  rationale: NORI 的简洁、自然、可靠表达更适合清晰而略有人文温度的现代展示无衬线字，不需要为了秋季或生活方式场景强行加入手写感。
+  imagegen_instruction: 使用高可读性、略有人文温度的现代中文展示无衬线字；字形清爽、稳健、当代，标题具有明确存在感但不做廉价促销式夸张。
+  use_preview_as_image_reference: false
 avoid:
   - 改变商品结构、主要颜色或商品自带标识
   - 重绘、拉伸、旋转或替换品牌 Logo
   - 过度季节装饰、廉价促销贴纸和无关道具堆砌
+  - 商品加三个同权参数卡、价格框和 CTA 的通用信息图结构
   - 虚构内部结构或未在 brief 中出现的功能
   - 乱码、重复文案、中英文混用或遗漏锁定文案
 composition_freedom: high
-

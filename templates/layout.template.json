@@ -21,8 +21,16 @@
     "price": null,
     "cta": null
   },
+  "composition": {
+    "primary_archetype": null,
+    "secondary_device": null,
+    "visual_flow": null,
+    "product_placement_logic": null,
+    "text_product_relationship": null,
+    "distinctive_device": null,
+    "avoid_default_stack": true
+  },
   "safe_areas": [],
   "asset_protection": [],
   "composition_freedom": "high"
 }
-

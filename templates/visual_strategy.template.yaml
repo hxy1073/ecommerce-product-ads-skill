@@ -2,6 +2,13 @@ schema_version: 2
 selected_concept:
   id: null
   name: null
+key_visual_idea: null
+style_direction:
+  primary_style: null
+  product_brand_alignment: []
+  secondary_mood: []
+  rationale: null
+  avoid: []
 design_intent: null
 visual_priority: []
 scene_direction: null
@@ -11,6 +18,24 @@ mood_and_light: null
 composition_direction: null
 brand_expression: null
 cta_direction: null
+information_strategy:
+  density: low_or_moderate
+  secondary_information_treatment: subordinate
+reference_guidance:
+  mode: none
+  selected: []
+  learn_from: []
+  do_not_copy:
+    - exact composition
+    - original brand identity
+    - original text
+    - original product form
+typography:
+  headline_direction: null
+  selected_source: null
+  characteristics: []
+  rationale: null
+  imagegen_instruction: null
+  use_preview_as_image_reference: false
 avoid: []
 composition_freedom: high
-

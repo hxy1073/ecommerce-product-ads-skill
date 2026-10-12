@@ -9,6 +9,11 @@ concept_checkpoint:
   completed_at: null
   choices: [A, B, C, AUTO]
 stage_2: {status: not_started, completed_at: null}
+visual_direction_checkpoint:
+  status: pending
+  confirmed: null
+  adjusted_fields: []
+  completed_at: null
 stage_3:
   status: not_started
   current_version: {}
@@ -30,4 +35,3 @@ repair:
   used_original_product: false
   used_original_logo: false
 exports: []
-

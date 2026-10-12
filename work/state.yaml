@@ -1,6 +1,6 @@
 schema_version: 2
 current_stage: completed
-migration_note: V2 Concept 与 Art Direction 记录于 2026-10-08 根据已接受的 V1 方向补录；原生成与导出文件保持不变。
+migration_note: V2 Concept 与 Art Direction 记录于 2026-10-08 根据已接受的 V1 方向补录；V2.3 Visual Direction 与 Checkpoint B 于 2026-10-10 按已接受方向迁移，原生成与导出文件保持不变。
 stage_0: {status: completed, completed_at: "2026-09-30"}
 stage_1: {status: completed, completed_at: "2026-09-30"}
 concept_checkpoint:
@@ -10,6 +10,11 @@ concept_checkpoint:
   completed_at: "2026-09-30"
   choices: [A, B, C, AUTO]
 stage_2: {status: completed, completed_at: "2026-09-30"}
+visual_direction_checkpoint:
+  status: completed
+  confirmed: true
+  adjusted_fields: []
+  completed_at: "2026-10-10"
 stage_3:
   status: completed
   current_version:
@@ -42,4 +47,3 @@ exports:
   - path: output/qa_report.md
     type: qa_report
     exported_at: "2026-10-07"
-

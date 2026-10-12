@@ -9,6 +9,11 @@ concept_checkpoint:
   completed_at: "2026-10-08"
   choices: [A, B, C, AUTO]
 stage_2: {status: completed, completed_at: "2026-10-08"}
+visual_direction_checkpoint:
+  status: completed
+  confirmed: true
+  adjusted_fields: []
+  completed_at: "2026-10-10"
 stage_3:
   status: not_started
   current_version: {}
@@ -30,4 +35,3 @@ repair:
   used_original_product: false
   used_original_logo: false
 exports: []
-

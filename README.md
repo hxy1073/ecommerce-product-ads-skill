@@ -1,6 +1,6 @@
-# ecommerce-product-ads-skill V2.1
+# ecommerce-product-ads-skill V2.3
 
-这是一个全局可复用 Skill。新建任意任务文件夹，只需放入：
+这是一个全局可复用的电商商品 Key Visual Skill。新建任意任务文件夹，只需放入：
 
 ```text
 text.pdf
@@ -14,73 +14,69 @@ logo.svg
 使用 $ecommerce-product-ads-skill 处理当前任务，从 Stage 0 开始。
 ```
 
-Skill 会保留根目录源文件，并自动创建：
-
-```text
-input/
-├── text.pdf
-├── product.png
-└── logo.svg
-work/
-output/
-```
-
-也支持用户预先建立完整的 `input/`。`text.pdf` 是事实与锁定文案来源；商品图和 Logo 是受保护资产。PDF 未提供的信息保持 `null`。
+Skill 保留根目录源文件，自动创建 `input/`、`work/`、`output/`；也支持预先建立完整 `input/`。`text.pdf` 是事实与锁定文案来源，商品与 Logo 是受保护资产，PDF 未提供的信息保持 `null`。
 
 ## 工作区与 Skill 资源
 
-- 任务目录只保存 `input/`、`work/`、`output/` 及用户原始输入。
-- 已安装 Skill 保存 `templates/`、`references/patterns/`、`scripts/`、说明和示例。
-- 模板、Pattern 和验证器从已安装 Skill 读取；所有任务产物只写入当前任务目录。
-- 已有 `work/state.yaml` 时按状态继续；Stage 6 已完成时保留结果，不自动重启或覆盖。
+- 任务目录只保存输入、工作版本和最终输出。
+- 已安装 Skill 保存 templates、Design Knowledge、真实案例、字体资源和验证脚本。
+- 所有任务产物只写入当前任务目录；已有 `state.yaml` 时继续任务，不无条件覆盖。
 - 输入不完整时列出缺失文件并停止。
+- 开发仓库模式、`examples/nori/` 和 Workspace Bootstrap 保持可用。
 
-无需为每个任务复制整个仓库，也无需 API key。正常流程使用 Codex 内置 ImageGen；Python 只做工作区初始化和确定性校验。
+无需 API key。主视觉使用 Codex 内置 ImageGen；Python 只负责初始化和确定性验证。
 
-## 开发仓库模式
-
-本仓库仍可直接作为开发项目使用，保留自身的 `input/`、`templates/`、`references/`、`scripts/`、`work/`、`output/` 和 `examples/nori/`。开发验证命令保持不变。
-
-## V2 流程
+## V2.3 流程
 
 ```text
-Stage 0  需求解析 + 商品视觉分析
+Stage 0  需求与商品分析
    ↓
-Stage 1  生成 3 个 Concept
+Stage 1  Pattern + 可选案例启发 → 3 个 Key Visual Concept
    ↓
-Checkpoint A  选择 A / B / C / AUTO
+Checkpoint A  A / B / C / AUTO，选择创意讲什么
    ↓
-Stage 2  Art Direction + 宽松 Layout
+Stage 2  Style + Composition + Typography + Reference + Art Direction
    ↓
-Stage 3  ImageGen 完整主视觉
+Checkpoint B  确认或调整生成前 Visual Direction
    ↓
-Stage 4  自动 + 视觉 QA
+Stage 3  ImageGen 完整 Key Visual
    ↓
-Stage 5  接受 / 迭代 / 原始资产恢复
+Stage 4  Design QA
+   ↓
+Stage 5  Final Human Check：A 接受 / B 迭代 / C 原始资产恢复
    ↓
 Stage 6  导出正式 PNG
 ```
 
-Checkpoint A 的 A/B/C 是三个营销概念；Stage 5 的 A/B/C 是最终结果处理：
+Checkpoint A、Checkpoint B、Stage 5 分别负责 Concept Decision、Visual Direction Decision、Final Delivery Decision；Checkpoint B 不替代最终 A/B/C 检查。
 
-- A：接受当前结果并进入导出。
-- B：按问题层级回到 Concept、Art Direction 或 ImageGen。
-- C：保留设计，用原始商品图和/或 Logo 恢复失真资产。
+## Visual Direction
 
-AUTO 会依据营销目标、目标用户、品牌调性、可用产品事实和商品视觉特征选择综合匹配度最高的 Concept，不按“最好看”主观选择。
+Stage 2 依据商品与品牌、已选 Concept、Campaign 与受众、最后才是 Reference，决定整体 Style；再从构图知识中选择关系式 Composition Archetype，避免无理由的“Logo → 标题 → 居中商品 → 卖点 → 价格 → CTA”默认堆叠。
 
-## Design Pattern
+Typography 是生成前决策：先写语义化的标题方向和 ImageGen 指令。手写字体库只在适合时用于内部分析，默认不把预览图输入 ImageGen，不安装或精确渲染 TTF。
 
-`references/patterns/` 包含 6 个轻量设计知识 Pattern，用于启发 Concept 与 Art Direction。它们不是固定模板、商品事实或 ImageGen Prompt。一个 Concept 最多使用 1 个 primary Pattern 和 2 个 secondary Pattern。
+真实案例仍采用 `same_category / cross_category / none`，最多 2 张，也可以 0 张。跨品类依据设计问题相似，而不是商品名相似；只学习焦点、密度、场景、光影与视觉机制，不复制。
 
-## 关键工作文件
+## QA 与迭代
 
-- `work/brief.yaml`：需求、事实、锁定文案与商品视觉分析。
-- `work/concepts.yaml`：三个轻量 Concept、推荐与选择结果。
-- `work/visual_strategy.yaml`：选中 Concept 的 Art Direction。
-- `work/layout.json`：信息层级与宽松空间关系。
-- `work/state.yaml`：Stage 0～6 的简单状态记录。
-- `work/qa_report.md`：设计 QA。
+Stage 4 保留商品、Logo、文案、品牌、画布和 artifact 检查，并包含：
+
+- `key_visual_integrity`
+- `typography_fit`
+- `style_alignment`
+- `composition_distinctiveness`
+
+Stage 5 的 B 按问题回 Stage 1、2 或 3；Style/Composition 失败优先回 Stage 2。C 只恢复失真的原始商品或 Logo，保留整体创意与构图。
+
+## 关键文件
+
+- `work/brief.yaml`：事实、锁定文案与商品视觉分析。
+- `work/concepts.yaml`：三个 Key Visual Concept、推荐与选择。
+- `work/visual_strategy.yaml`：Key Visual、Style、Typography、Reference 与 Art Direction。
+- `work/layout.json`：Composition、层级、宽松空间关系与资产保护。
+- `work/state.yaml`：Stage 0～6、Checkpoint A/B 和最终决定。
+- `work/qa_report.md`：Design QA。
 - `output/hero_<lang>.png`：正式交付。
 
 ## 验证
@@ -94,4 +90,4 @@ python scripts/validate.py --project examples/nori --stage work
 python scripts/validate.py --project . --stage output
 ```
 
-`examples/nori/` 展示了需求分析、三个明显不同的 Concept、AUTO 选择和选定方案的 Art Direction；其中的秋季、通勤、绿色和保温杯内容只属于该示例。
+`examples/nori/` 展示完整的 Stage 0～2 数据结构与两个 Checkpoint；示例不强制选择真实案例或手写字体，也不重新生成正式 PNG。

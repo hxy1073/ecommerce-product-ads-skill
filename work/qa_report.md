@@ -24,6 +24,10 @@
 | 语言纯度 | pass | pass | 中文版无英文营销文案；英文版无中文文案 |
 | 版式与安全区 | pass | pass | 无明显溢出、遮挡或低对比文本 |
 | 品牌调性 | pass | pass | 简洁、自然、可靠，符合秋日通勤主题 |
+| key_visual_integrity | needs_human_review | needs_human_review | 该结果生成于 V2.2 之前；商品中心明确，但参数卡、价格框与 CTA 占据较强权重，需要按新标准人工判断主体画面脱离信息模块后是否仍完整成立 |
+| typography_fit | pass | pass | 标题清晰可读并符合简洁可靠方向；本例未选择手写字体参考 |
+| style_alignment | needs_human_review | needs_human_review | 现有图片早于 V2.3 Style Decision；需人工确认 Organic Lifestyle 的自然、清爽、可靠是否真实体现，且秋季氛围没有覆盖 NORI 品牌气质 |
+| composition_distinctiveness | needs_human_review | needs_human_review | 现有图片早于 V2.3 Composition Decision；需人工确认其是否体现非对称编辑与对角动势，并避免退化为标准纵向堆叠 |
 | 明显 AI artifact | pass | pass | 未发现影响交付的乱码、畸形道具或重复文字 |
 
 ## 结论
@@ -33,4 +37,3 @@
 - **A**：接受当前结果，进入 Stage 6。
 - **B**：按问题层级回到 Stage 1、2 或 3。
 - **C**：保留设计并使用原始 `product.png` / `logo.svg` 恢复失真资产。
-

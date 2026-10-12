@@ -46,6 +46,7 @@ PATTERN_FIELDS = (
 CONCEPT_FIELDS = (
     "name",
     "concept",
+    "key_visual_idea",
     "marketing_focus",
     "scene_direction",
     "selling_point_approach",
@@ -53,6 +54,8 @@ CONCEPT_FIELDS = (
 )
 STRATEGY_FIELDS = (
     "selected_concept",
+    "key_visual_idea",
+    "style_direction",
     "design_intent",
     "visual_priority",
     "scene_direction",
@@ -62,12 +65,23 @@ STRATEGY_FIELDS = (
     "composition_direction",
     "brand_expression",
     "cta_direction",
+    "information_strategy",
+    "reference_guidance",
+    "typography",
     "avoid",
     "composition_freedom",
 )
 ALLOWED_SELECTIONS = {"A", "B", "C"}
 ALLOWED_METHODS = {"user", "auto"}
 ALLOWED_STAGE_STATUS = {"not_started", "pending", "in_progress", "completed"}
+ALLOWED_REFERENCE_MODES = {"same_category", "cross_category", "none"}
+REFERENCE_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png"}
+REQUIRED_DO_NOT_COPY = {
+    "exact composition",
+    "original brand identity",
+    "original text",
+    "original product form",
+}
 
 
 class ValidationError(Exception):
@@ -104,6 +118,26 @@ def require_nonempty_text(value, label: str) -> str:
     if not isinstance(value, str) or not value.strip():
         raise ValidationError(f"{label} must be non-empty text")
     return value
+
+
+def resolve_skill_reference(
+    value, label: str, allowed_root: Path, *, expect_directory: bool = False
+) -> Path:
+    text = require_nonempty_text(value, label)
+    raw_path = Path(text)
+    path = raw_path.resolve() if raw_path.is_absolute() else (SKILL_ROOT / raw_path).resolve()
+    allowed_root = allowed_root.resolve()
+    try:
+        path.relative_to(allowed_root)
+    except ValueError as exc:
+        raise ValidationError(f"{label} must stay inside {allowed_root}") from exc
+
+    if expect_directory:
+        if not path.is_dir():
+            raise ValidationError(f"{label} directory does not exist: {path}")
+    elif not path.is_file():
+        raise ValidationError(f"{label} file does not exist: {path}")
+    return path
 
 
 def require_path(data, dotted_path: str) -> None:
@@ -312,8 +346,18 @@ def validate_concepts(concepts_doc: dict, pattern_ids: set[str]) -> tuple[str | 
 
 
 def validate_state(state: dict, selected: str | None, method: str | None) -> str:
-    for stage in ("stage_0", "stage_1", "stage_2", "stage_3", "stage_4", "stage_5", "stage_6"):
-        stage_status(state, stage)
+    statuses = {
+        stage: stage_status(state, stage)
+        for stage in (
+            "stage_0",
+            "stage_1",
+            "stage_2",
+            "stage_3",
+            "stage_4",
+            "stage_5",
+            "stage_6",
+        )
+    }
 
     checkpoint = require_mapping(
         state.get("concept_checkpoint"), "state.concept_checkpoint"
@@ -331,13 +375,70 @@ def validate_state(state: dict, selected: str | None, method: str | None) -> str
         raise ValidationError("Unselected Concept checkpoint must remain pending")
     if selected is not None and checkpoint_status != "completed":
         raise ValidationError("Selected Concept checkpoint must be completed")
+    if checkpoint_status == "completed" and statuses["stage_1"] != "completed":
+        raise ValidationError(
+            "Concept Checkpoint cannot complete before Stage 1 is completed"
+        )
 
-    stage_2_status = stage_status(state, "stage_2")
+    stage_2_status = statuses["stage_2"]
     if stage_started(stage_2_status):
-        if selected is None or method is None or checkpoint_status != "completed":
+        if (
+            statuses["stage_1"] != "completed"
+            or selected is None
+            or method is None
+            or checkpoint_status != "completed"
+        ):
             raise ValidationError(
                 "Stage 2 cannot start before Concept Selection is completed"
             )
+
+    visual_checkpoint = require_mapping(
+        state.get("visual_direction_checkpoint"),
+        "state.visual_direction_checkpoint",
+    )
+    visual_checkpoint_status = visual_checkpoint.get("status")
+    if visual_checkpoint_status not in {"pending", "completed"}:
+        raise ValidationError(
+            "state.visual_direction_checkpoint.status must be pending or completed"
+    )
+    confirmed = visual_checkpoint.get("confirmed")
+    if confirmed is not None and not isinstance(confirmed, bool):
+        raise ValidationError(
+            "state.visual_direction_checkpoint.confirmed must be true, false, or null"
+        )
+    adjusted_fields = require_list(
+        visual_checkpoint.get("adjusted_fields"),
+        "state.visual_direction_checkpoint.adjusted_fields",
+    )
+    if not all(isinstance(item, str) and item.strip() for item in adjusted_fields):
+        raise ValidationError(
+            "state.visual_direction_checkpoint.adjusted_fields must contain text items"
+        )
+    if visual_checkpoint_status == "completed" and confirmed is not True:
+        raise ValidationError(
+            "Completed Visual Direction Checkpoint requires confirmed=true"
+        )
+    if confirmed is True and visual_checkpoint_status != "completed":
+        raise ValidationError(
+            "confirmed=true requires a completed Visual Direction Checkpoint"
+        )
+    if confirmed is True and stage_2_status != "completed":
+        raise ValidationError(
+            "Visual Direction Checkpoint cannot complete before Stage 2 is completed"
+        )
+    if stage_started(statuses["stage_3"]):
+        if (
+            stage_2_status != "completed"
+            or visual_checkpoint_status != "completed"
+            or confirmed is not True
+        ):
+            raise ValidationError(
+                "Stage 3 cannot start before Visual Direction Checkpoint is confirmed"
+            )
+    if stage_started(statuses["stage_4"]) and statuses["stage_3"] != "completed":
+        raise ValidationError("Stage 4 cannot start before Stage 3 is completed")
+    if statuses["stage_3"] == "completed" and statuses["stage_4"] == "not_started":
+        raise ValidationError("Completed Stage 3 must proceed to Stage 4")
 
     stage_5 = require_mapping(state.get("stage_5"), "state.stage_5")
     expected_choices = {
@@ -347,8 +448,22 @@ def validate_state(state: dict, selected: str | None, method: str | None) -> str
     }
     if stage_5.get("choices") != expected_choices:
         raise ValidationError("Stage 5 choices must be exactly the V2 A/B/C options")
-    if stage_5.get("decision") not in ALLOWED_SELECTIONS | {None}:
+    stage_5_decision = stage_5.get("decision")
+    if stage_5_decision not in ALLOWED_SELECTIONS | {None}:
         raise ValidationError("state.stage_5.decision must be A, B, C, or null")
+    if stage_5_decision is not None and statuses["stage_5"] != "completed":
+        raise ValidationError("A Stage 5 decision requires stage_5.status=completed")
+    if statuses["stage_5"] == "completed" and stage_5_decision is None:
+        raise ValidationError("Completed Stage 5 requires decision A, B, or C")
+    if stage_started(statuses["stage_5"]) and statuses["stage_4"] != "completed":
+        raise ValidationError("Stage 5 cannot start before Stage 4 is completed")
+    if statuses["stage_4"] == "completed" and statuses["stage_5"] == "not_started":
+        raise ValidationError("Completed Stage 4 must proceed to Stage 5 Final Check")
+    if stage_started(statuses["stage_6"]):
+        if statuses["stage_5"] != "completed" or stage_5_decision != "A":
+            raise ValidationError(
+                "Stage 6 cannot start before Stage 5 explicitly selects A"
+            )
     return stage_2_status
 
 
@@ -393,6 +508,174 @@ def validate_stage_2_outputs(
         raise ValidationError(
             "visual_strategy.selected_concept.name must match concepts.yaml"
         )
+    key_visual_idea = require_nonempty_text(
+        strategy.get("key_visual_idea"), "visual_strategy.key_visual_idea"
+    )
+    if key_visual_idea != concepts_doc["concepts"][selected]["key_visual_idea"]:
+        raise ValidationError(
+            "visual_strategy.key_visual_idea must match the selected Concept"
+        )
+
+    style_direction = require_mapping(
+        strategy.get("style_direction"), "visual_strategy.style_direction"
+    )
+    require_nonempty_text(
+        style_direction.get("primary_style"),
+        "visual_strategy.style_direction.primary_style",
+    )
+    product_brand_alignment = require_list(
+        style_direction.get("product_brand_alignment"),
+        "visual_strategy.style_direction.product_brand_alignment",
+    )
+    if not product_brand_alignment or not all(
+        isinstance(item, str) and item.strip() for item in product_brand_alignment
+    ):
+        raise ValidationError(
+            "visual_strategy.style_direction.product_brand_alignment must contain text items"
+        )
+    secondary_mood = require_list(
+        style_direction.get("secondary_mood"),
+        "visual_strategy.style_direction.secondary_mood",
+    )
+    if not all(isinstance(item, str) and item.strip() for item in secondary_mood):
+        raise ValidationError(
+            "visual_strategy.style_direction.secondary_mood must contain text items"
+        )
+    require_nonempty_text(
+        style_direction.get("rationale"),
+        "visual_strategy.style_direction.rationale",
+    )
+    style_avoid = require_list(
+        style_direction.get("avoid"), "visual_strategy.style_direction.avoid"
+    )
+    if not all(isinstance(item, str) and item.strip() for item in style_avoid):
+        raise ValidationError(
+            "visual_strategy.style_direction.avoid must contain text items"
+        )
+
+    information_strategy = require_mapping(
+        strategy.get("information_strategy"), "visual_strategy.information_strategy"
+    )
+    if information_strategy.get("density") != "low_or_moderate":
+        raise ValidationError(
+            "visual_strategy.information_strategy.density must be low_or_moderate"
+        )
+    if information_strategy.get("secondary_information_treatment") != "subordinate":
+        raise ValidationError(
+            "visual_strategy.information_strategy.secondary_information_treatment "
+            "must be subordinate"
+        )
+
+    reference_guidance = require_mapping(
+        strategy.get("reference_guidance"), "visual_strategy.reference_guidance"
+    )
+    reference_mode = reference_guidance.get("mode")
+    if reference_mode not in ALLOWED_REFERENCE_MODES:
+        raise ValidationError(
+            "visual_strategy.reference_guidance.mode must be "
+            "same_category, cross_category, or none"
+        )
+    selected_references = require_list(
+        reference_guidance.get("selected"),
+        "visual_strategy.reference_guidance.selected",
+    )
+    if len(selected_references) > 2:
+        raise ValidationError(
+            "visual_strategy.reference_guidance.selected may contain at most 2 images"
+        )
+    if not all(isinstance(item, str) and item.strip() for item in selected_references):
+        raise ValidationError(
+            "visual_strategy.reference_guidance.selected must contain path strings"
+        )
+    if len(selected_references) != len(set(selected_references)):
+        raise ValidationError(
+            "visual_strategy.reference_guidance.selected contains duplicates"
+        )
+    if reference_mode == "none" and selected_references:
+        raise ValidationError(
+            "reference_guidance.selected must be empty when mode is none"
+        )
+    if reference_mode != "none" and not selected_references:
+        raise ValidationError(
+            "same_category or cross_category requires at least 1 selected image"
+        )
+    style_reference_root = SKILL_ROOT / "references" / "风格案例图"
+    for index, value in enumerate(selected_references):
+        path = resolve_skill_reference(
+            value,
+            f"visual_strategy.reference_guidance.selected[{index}]",
+            style_reference_root,
+        )
+        if path.suffix.lower() not in REFERENCE_IMAGE_EXTENSIONS:
+            raise ValidationError(
+                f"Style reference must be JPG, JPEG, or PNG: {path}"
+            )
+
+    learn_from = require_list(
+        reference_guidance.get("learn_from"),
+        "visual_strategy.reference_guidance.learn_from",
+    )
+    if not all(isinstance(item, str) and item.strip() for item in learn_from):
+        raise ValidationError("reference_guidance.learn_from must contain text items")
+    if reference_mode != "none" and not learn_from:
+        raise ValidationError(
+            "Selected style references require at least one learn_from principle"
+        )
+    do_not_copy = require_list(
+        reference_guidance.get("do_not_copy"),
+        "visual_strategy.reference_guidance.do_not_copy",
+    )
+    if not all(isinstance(item, str) and item.strip() for item in do_not_copy):
+        raise ValidationError("reference_guidance.do_not_copy must contain text items")
+    missing_constraints = sorted(REQUIRED_DO_NOT_COPY - set(do_not_copy))
+    if missing_constraints:
+        raise ValidationError(
+            "reference_guidance.do_not_copy missing required constraints: "
+            + ", ".join(missing_constraints)
+        )
+
+    typography = require_mapping(
+        strategy.get("typography"), "visual_strategy.typography"
+    )
+    require_nonempty_text(
+        typography.get("headline_direction"),
+        "visual_strategy.typography.headline_direction",
+    )
+    characteristics = require_list(
+        typography.get("characteristics"),
+        "visual_strategy.typography.characteristics",
+    )
+    if not characteristics or not all(
+        isinstance(item, str) and item.strip() for item in characteristics
+    ):
+        raise ValidationError(
+            "visual_strategy.typography.characteristics must contain text items"
+        )
+    require_nonempty_text(
+        typography.get("rationale"), "visual_strategy.typography.rationale"
+    )
+    require_nonempty_text(
+        typography.get("imagegen_instruction"),
+        "visual_strategy.typography.imagegen_instruction",
+    )
+    use_preview = typography.get("use_preview_as_image_reference")
+    if not isinstance(use_preview, bool):
+        raise ValidationError(
+            "visual_strategy.typography.use_preview_as_image_reference must be boolean"
+        )
+    font_reference_root = SKILL_ROOT / "references" / "手写合集字体"
+    font_source = typography.get("selected_source")
+    if font_source is not None:
+        resolve_skill_reference(
+            font_source,
+            "visual_strategy.typography.selected_source",
+            font_reference_root,
+            expect_directory=True,
+        )
+    if use_preview and font_source is None:
+        raise ValidationError(
+            "Typography preview reference requires a selected_source directory"
+        )
     if strategy.get("composition_freedom") != "high":
         raise ValidationError("visual_strategy composition_freedom must be high")
 
@@ -402,6 +685,7 @@ def validate_stage_2_outputs(
         "hierarchy",
         "major_visual_regions",
         "preferred_relationships",
+        "composition",
         "safe_areas",
         "asset_protection",
         "composition_freedom",
@@ -415,6 +699,29 @@ def validate_stage_2_outputs(
     require_list(layout["hierarchy"], "layout.hierarchy")
     require_mapping(layout["major_visual_regions"], "layout.major_visual_regions")
     require_mapping(layout["preferred_relationships"], "layout.preferred_relationships")
+    composition = require_mapping(layout["composition"], "layout.composition")
+    require_nonempty_text(
+        composition.get("primary_archetype"),
+        "layout.composition.primary_archetype",
+    )
+    secondary_device = composition.get("secondary_device")
+    if secondary_device is not None:
+        require_nonempty_text(
+            secondary_device, "layout.composition.secondary_device"
+        )
+    for field in (
+        "visual_flow",
+        "product_placement_logic",
+        "text_product_relationship",
+        "distinctive_device",
+    ):
+        require_nonempty_text(
+            composition.get(field), f"layout.composition.{field}"
+        )
+    if not isinstance(composition.get("avoid_default_stack"), bool):
+        raise ValidationError(
+            "layout.composition.avoid_default_stack must be boolean"
+        )
     require_list(layout["safe_areas"], "layout.safe_areas")
     require_list(layout["asset_protection"], "layout.asset_protection")
     if layout.get("composition_freedom") != "high":
@@ -451,8 +758,9 @@ def validate_work(project: Path) -> list[str]:
     return [
         "Brief includes structured product_visual analysis",
         "Concepts A/B/C, recommendation, and selection are valid",
-        "Concept checkpoint and Stage 2 gating are consistent",
+        "Concept and Visual Direction checkpoints are consistent",
         stage_2_message,
+        "Key Visual, Style, Composition, Typography, and optional references are valid",
         "All six Design Pattern JSON files parsed successfully",
     ]
 

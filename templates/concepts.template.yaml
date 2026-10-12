@@ -3,6 +3,7 @@ concepts:
   A:
     name: null
     concept: null
+    key_visual_idea: null
     marketing_focus: null
     scene_direction: null
     selling_point_approach: null
@@ -10,6 +11,7 @@ concepts:
   B:
     name: null
     concept: null
+    key_visual_idea: null
     marketing_focus: null
     scene_direction: null
     selling_point_approach: null
@@ -17,6 +19,7 @@ concepts:
   C:
     name: null
     concept: null
+    key_visual_idea: null
     marketing_focus: null
     scene_direction: null
     selling_point_approach: null
@@ -27,4 +30,3 @@ recommendation:
 selection:
   selected: null
   method: null
-
