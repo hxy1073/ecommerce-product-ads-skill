@@ -23,6 +23,8 @@ Pattern 禁止规定固定坐标、Logo 位置、HEX 色、字体、卡片形状
 
 真实案例采用 `same_category / cross_category / none`：优先同品类；没有同品类时按“设计问题相似”跨品类借鉴；没有高价值匹配时使用 `none`。参考图可以为 0 张，Stage 2 最多选择 2 张，且不得复制原构图、品牌、文字或商品形态。
 
+当前 `风格案例图/` 按商品品类分为：`个护/`、`家居产品/`、`服装/`、`汽车/`、`食品/`、`珠宝手表/`、`户外运动/`、`家电/`、`消费电子/`。新增品类目录无需修改验证器；只要图片实际位于该目录下，就可以按上述 `same_category / cross_category / none` 规则参与 Stage 1 浏览与 Stage 2 选择。
+
 Style 与 Composition 名称不是验证器枚举；知识文档后续可扩展而不需要改代码。Style 优先由商品与品牌决定，Composition 必须落实已选 Key Visual Concept，并避免无理由的标准纵向堆叠。两份 Guide 都只描述设计逻辑，不是 Style Lock 或固定布局。
 
 手写字体不是强制资源。只有与商品、品牌、Key Visual、Style 和 Composition 匹配时，才浏览 `ZYHJ01-字体列表.jpg` 与候选目录的 `C-预览 (1).jpg/.png`，最多记录 1 套 `selected_source` 作为内部设计灵感。Stage 3 默认只消费语义化的 `typography.imagegen_instruction`；TTF 仅作为未来资产保留。
